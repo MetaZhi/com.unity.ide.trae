@@ -1,5 +1,5 @@
 {
-    "name": "Unity.Cursor.Editor",
+    "name": "Unity.Trae.Editor",
     "references": [],
     "includePlatforms": [
         "Editor"

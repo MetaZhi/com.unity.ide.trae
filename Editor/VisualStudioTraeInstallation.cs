@@ -14,7 +14,7 @@ using SimpleJSON;
 using IOPath = System.IO.Path;
 
 namespace Microsoft.Unity.VisualStudio.Editor {
-	internal class VisualStudioCursorInstallation : VisualStudioInstallation {
+	internal class VisualStudioTraeInstallation : VisualStudioInstallation {
 		private static readonly IGenerator _generator = new SdkStyleProjectGeneration();
 
 		public override bool SupportsAnalyzers {
@@ -57,11 +57,11 @@ namespace Microsoft.Unity.VisualStudio.Editor {
 
 		private static bool IsCandidateForDiscovery(string path) {
 #if UNITY_EDITOR_OSX
-			return Directory.Exists(path) && Regex.IsMatch(path, ".*Cursor.*.app$", RegexOptions.IgnoreCase);
+			return Directory.Exists(path) && Regex.IsMatch(path, ".*Trae.*.app$", RegexOptions.IgnoreCase);
 #elif UNITY_EDITOR_WIN
-			return File.Exists(path) && Regex.IsMatch(path, ".*Cursor.*.exe$", RegexOptions.IgnoreCase);
+			return File.Exists(path) && Regex.IsMatch(path, ".*Trae.*.exe$", RegexOptions.IgnoreCase);
 #else
-			return File.Exists(path) && path.EndsWith("cursor", StringComparison.OrdinalIgnoreCase);
+			return File.Exists(path) && path.EndsWith("trae", StringComparison.OrdinalIgnoreCase);
 #endif
 		}
 
@@ -113,9 +113,9 @@ namespace Microsoft.Unity.VisualStudio.Editor {
 			}
 
 			isPrerelease = isPrerelease || editorPath.ToLower().Contains("insider");
-			installation = new VisualStudioCursorInstallation() {
+			installation = new VisualStudioTraeInstallation() {
 				IsPrerelease = isPrerelease,
-				Name = "Cursor" + (isPrerelease ? " - Insider" : string.Empty) + (version != null ? $" [{version.ToString(3)}]" : string.Empty),
+				Name = "Trae" + (isPrerelease ? " - Insider" : string.Empty) + (version != null ? $" [{version.ToString(3)}]" : string.Empty),
 				Path = editorPath,
 				Version = version ?? new Version()
 			};
@@ -131,16 +131,16 @@ namespace Microsoft.Unity.VisualStudio.Editor {
 			var programFiles = IOPath.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles));
 
 			foreach (var basePath in new[] { localAppPath, programFiles }) {
-				candidates.Add(IOPath.Combine(basePath, "cursor", "cursor.exe"));
+				candidates.Add(IOPath.Combine(basePath, "trae", "trae.exe"));
 			}
 #elif UNITY_EDITOR_OSX
 			var appPath = IOPath.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles));
-			candidates.AddRange(Directory.EnumerateDirectories(appPath, "Cursor*.app"));
+			candidates.AddRange(Directory.EnumerateDirectories(appPath, "Trae*.app"));
 #elif UNITY_EDITOR_LINUX
 			// Well known locations
-			candidates.Add("/usr/bin/cursor");
-			candidates.Add("/bin/cursor");
-			candidates.Add("/usr/local/bin/cursor");
+			candidates.Add("/usr/bin/trae");
+			candidates.Add("/bin/trae");
+			candidates.Add("/usr/local/bin/trae");
 
 			// Preference ordered base directories relative to which desktop files should be searched
 			candidates.AddRange(GetXdgCandidates());

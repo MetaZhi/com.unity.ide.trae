@@ -1177,7 +1177,7 @@ namespace EnvDTE {
 		dbgExecutionActionStepInto = 4,
 		dbgExecutionActionStepOut = 5,
 		dbgExecutionActionStepOver = 6,
-		dbgExecutionActionRunToCursor = 7
+		dbgExecutionActionRunToTrae = 7
 	};
 
 	enum __declspec(uuid("ed2fbdd2-1eb1-11d3-b888-00c04f79e479"))
@@ -6311,7 +6311,7 @@ namespace EnvDTE {
 		virtual HRESULT __stdcall Stop(
 			/*[in]*/ VARIANT_BOOL WaitForDesignMode) = 0;
 		virtual HRESULT __stdcall SetNextStatement() = 0;
-		virtual HRESULT __stdcall RunToCursor(
+		virtual HRESULT __stdcall RunToTrae(
 			/*[in]*/ VARIANT_BOOL WaitForBreakOrEnd) = 0;
 		virtual HRESULT __stdcall ExecuteStatement(
 			/*[in]*/ BSTR Statement,
